@@ -169,7 +169,7 @@ public:
 
 	void Clear()
 	{
-		while (!Full())
+		while (!Empty())
 			RemoveAt(length - 1);
 	}
 };
@@ -189,7 +189,10 @@ int main()
 		case 1:
 		{
 			if (list.Full())
+			{
 				cout << "La lista está llena, no se puede agregar" << endl;
+				break;
+			}
 
 			int c;
 			cout << "Escribe el numero\n";
@@ -206,7 +209,10 @@ int main()
 		case 2:
 		{
 			if (list.Full())
+			{
 				cout << "La lista está llena, no se puede agregar" << endl;
+				break;
+			}
 
 			int c, i;
 			cout << "Escribe el numero\n";
@@ -226,7 +232,10 @@ int main()
 		case 3:
 		{
 			if (list.Empty())
+			{
 				cout << "La lista está vacia, no se puede eliminar" << endl;
+				break;
+			}
 
 			int i;
 			cout << "Escribe la posicion\n";
@@ -245,12 +254,13 @@ int main()
 			{
 				cout << "La lista esta vacia" << endl;
 				system("pause");
+				break;
 			}
 
 			cout << "Elementos en la lista: ";
 
 			for (int i = 0; i < list.Length(); i++)
-				cout << list[i];
+				cout << list[i] << ' ';
 
 			cout << endl;
 
@@ -259,16 +269,16 @@ int main()
 		}
 		case 5:
 			if (list.Empty())
-				cout << "La cola está vacia" << endl;
+				cout << "La lista está vacia" << endl;
 			else
-				cout << "La cola no está vacia" << endl;
+				cout << "La lista no está vacia" << endl;
 			system("pause");
 			break;
 		case 6:
 			if (list.Full())
-				cout << "La cola está llena" << endl;
+				cout << "La lista está llena" << endl;
 			else
-				cout << "La cola no está llena" << endl;
+				cout << "La lista no está llena" << endl;
 			system("pause");
 			break;
 
@@ -277,6 +287,7 @@ int main()
 			{
 				cout << "La lista esta vacia" << endl;
 				system("pause");
+				break;
 			}
 
 			cout << "Elemento primero: " << list.First() << endl;
@@ -286,6 +297,7 @@ int main()
 			{
 				cout << "La lista esta vacia" << endl;
 				system("pause");
+				break;
 			}
 
 			cout << "Elemento ultimo: " << list.Last() << endl;
