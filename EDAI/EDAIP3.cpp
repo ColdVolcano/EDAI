@@ -41,8 +41,7 @@ public:
 	T Dequeue()
 	{
 		T out = underlying[start];
-		if (start == end)
-			shouldBeEmpty = true;
+		shouldBeEmpty = start == end;
 
 		start = (start + 1) % capacity;
 		return out;

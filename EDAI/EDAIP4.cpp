@@ -182,7 +182,7 @@ int main()
 	do
 	{
 		cout << " Seleccione una opcion:\n\n 1.- Agregar al final\n 2.- Insertar en posicion\n 3.- Eliminar en posicion\n 4.- Imprimir todo\n 5.- Comprobar vacia\n 6.- Comprobar llena \n"
-			" 7.- Imprimir primero\n 8.- Imprimir ultimo\n 9.- Limpiar\n 10.- Salir\n\n > ";
+			<< " 7.- Imprimir primero\n 8.- Imprimir ultimo\n 9.- Limpiar\n 10.- Salir\n\n > ";
 		cin >> opc;
 		switch (opc)
 		{
