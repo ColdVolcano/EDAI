@@ -42,16 +42,38 @@ public:
 		return true;
 	}
 
+private:
+	void setOrderEnsured()
+	{
+		if (Length() <= 1)
+		{
+			orderEnsured = true;
+			return;
+		}
+
+		for (int i = 1; i < length; i++)
+		{
+			if (underlying[i] < underlying[i - 1])
+			{
+				orderEnsured = true;
+				return;
+			}
+		}
+
+		orderEnsured = false;
+	}
+
+public:
 	bool Add(T data)
 	{
 		if (length == capacity)
 			return false;
 
-		orderEnsured = false;
-
 		underlying[length] = data;
 
 		length++;
+
+		setOrderEnsured();
 
 		return true;
 	}
@@ -61,14 +83,15 @@ public:
 		if (index > length || length == capacity)
 			return false;
 
-		orderEnsured = false;
-
 		for (int i = length; i > index; i--)
 			underlying[i] = underlying[i - 1];
 
 		underlying[index] = data;
 
 		length++;
+
+		setOrderEnsured();
+
 		return true;
 	}
 
@@ -104,6 +127,10 @@ public:
 
 		length--;
 		underlying[length] = 0;
+		
+		if(!orderEnsured)
+			setOrderEnsured();
+		
 		return true;
 	}
 
@@ -156,10 +183,10 @@ public:
 			if (underlying[ind] == data)
 				return ind;
 
-			if (underlying[ind] > data)
+			if (underlying[ind] < data)
 				botLim = ind + 1;
 			else
-				topLim = ind;
+				topLim = ind - 1;
 		}
 
 		return -1;
@@ -236,7 +263,7 @@ void BubbleSort(List<T>& list)
 template <typename T>
 void InsertSort(List<T>& list)
 {
-	for (int i = i; i < list.Length(); i++)
+	for (int i = 1; i < list.Length(); i++)
 	{
 		for (int j = i; j > 0; j--)
 		{
@@ -271,7 +298,6 @@ void QuickSort(List<T>& list, int start, int end)
 			T aux = list[j];
 			list.Set(j, list[i]);
 			list.Set(i, aux);
-			Print(list);
 		}
 
 		if (i != end)
@@ -279,7 +305,6 @@ void QuickSort(List<T>& list, int start, int end)
 			T aux = list[end];
 			list.Set(end, list[i]);
 			list.Set(i, aux);
-			Print(list);
 		}
 	}
 
@@ -326,13 +351,12 @@ void MergeAsItWasWrittenOnThePresentation(T* arr, int extizq, int extder)
 		return;
 
 	int medio = (extizq + extder) / 2;
-	MergeAsItWasWrittenOnThePresentation(arr, extizq, medio, 27);
-	MergeAsItWasWrittenOnThePresentation(arr, medio + 1, extder, 27);
+	MergeAsItWasWrittenOnThePresentation(arr, extizq, medio);
+	MergeAsItWasWrittenOnThePresentation(arr, medio + 1, extder);
 
 	int* temp = new int[extder];
 
 	memcpy_s(temp + extizq, sizeof(int) * (extder - extizq + 1), arr + extizq, sizeof(int) * (extder - extizq + 1));
-
 	int i = extizq, j = medio + 1, x = extizq;
 
 	while (i <= medio && j <= extder)
@@ -370,7 +394,7 @@ void MergeAsItWasWrittenOnThePresentation(T* arr, int extizq, int extder)
 		++j;
 		++x;
 	}
-	delete temp;
+	//delete temp; // No borrar o la cosa explota por alguna razón
 }
 
 void ShowOrder(List<int> &list)
@@ -385,23 +409,28 @@ void ShowOrder(List<int> &list)
 		case 1:
 			list.SortWithBubble();
 			cout << "Se ha ordenado correctamente\n";
-			break;
+			system("pause");
+			return;
 		case 2:
 			list.SortWithInsert();
 			cout << "Se ha ordenado correctamente\n";
-			break;
+			system("pause");
+			return;
 		case 3:
 			list.SortWithQuick();
 			cout << "Se ha ordenado correctamente\n";
-			break;
+			system("pause");
+			return;
 		case 4:
 			list.SortWithMerge();
 			cout << "Se ha ordenado correctamente (aunque el procedimiento me da migraña)\n";
-			break;
+			system("pause");
+			return;
 		case 5:
 			list.SortWithExampleMerge();
 			cout << "Se ha ordenado correctamente\n";
-			break;
+			system("pause");
+			return;
 		case 6:
 			return;
 		default:
@@ -429,14 +458,16 @@ void ShowSearch(List<int> &list)
 				cout << "No se encontró el numero" << endl;
 			else
 				cout << "Se encontró el numero en la posición " << res << endl;
-			break;
+			system("pause");
+			return;
 		}
 		case 2:
 		{
 			if (!list.IsOrdered())
 			{
 				cout << "La lista no está ordenada, no se puede realizar busqueda binaria" << endl;
-				break;
+				system("pause");
+				return;
 			}
 
 			int c;
@@ -447,7 +478,8 @@ void ShowSearch(List<int> &list)
 				cout << "No se encontró el numero" << endl;
 			else
 				cout << "Se encontró el numero en la posición " << res << endl;
-			break;
+			system("pause");
+			return;
 		}
 		case 3:
 			return;
@@ -462,7 +494,6 @@ int main()
 {
 	setlocale(LC_ALL, "es_MX");
 	List<int> list(10);
-
 	int opc;
 	do
 	{
@@ -593,12 +624,19 @@ int main()
 			cout << "Se ha limpiado la lista" << endl;
 			break;
 		case 10:
+			if (list.Empty())
+			{
+				cout << "La lista está vacia, no se puede realizar el ordenamiento" << endl;
+				system("pause");
+				break;
+			}
 			ShowOrder(list);
 			break;
 		case 11:
 			if (list.Empty())
 			{
 				cout << "La lista está vacia, no se puede realizar ninguna busqueda" << endl;
+				system("pause");
 				break;
 			}
 			ShowSearch(list);
