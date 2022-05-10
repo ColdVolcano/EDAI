@@ -4,6 +4,6 @@
 cmake_minimum_required (VERSION 3.8)
 
 # Add source to this project's executable.
-add_executable (EDAI "EDAIP5.cpp" "EDAI.h")
+add_executable (EDAI "EDAIP6.cpp" "EDAI.h")
 
 # TODO: Add tests and install targets if needed.

@@ -354,7 +354,7 @@ void MergeAsItWasWrittenOnThePresentation(T* arr, int extizq, int extder)
 	MergeAsItWasWrittenOnThePresentation(arr, extizq, medio);
 	MergeAsItWasWrittenOnThePresentation(arr, medio + 1, extder);
 
-	int* temp = new int[extder];
+	int* temp = new int[extder + 1];
 
 	memcpy_s(temp + extizq, sizeof(int) * (extder - extizq + 1), arr + extizq, sizeof(int) * (extder - extizq + 1));
 	int i = extizq, j = medio + 1, x = extizq;
@@ -394,7 +394,7 @@ void MergeAsItWasWrittenOnThePresentation(T* arr, int extizq, int extder)
 		++j;
 		++x;
 	}
-	//delete temp; // No borrar o la cosa explota por alguna razón
+	delete temp;
 }
 
 void ShowOrder(List<int> &list)
